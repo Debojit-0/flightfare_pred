@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flight Fare Prediction - a Classic Time Series Project
 * Flight fare prediction is a classical problem of time series forecasting that finds trends in past observations to outline the future
 * Many popular flight booking websites today, including Google Flights, showcase important insights on:
@@ -48,3 +49,6 @@ If you find a bug (the website couldn't handle the query and / or gave undesired
 ### Important links:
 * [Dataset](https://www.kaggle.com/datasets/nikhilmittal/flight-fare-prediction-mh)
 * [Project Folder on Drive](https://drive.google.com/drive/folders/1vnapi048bbmoXyoxOLLX6W_tA6a1uQ9w?usp=sharing)
+=======
+# flightfare_pred
+>>>>>>> 21147e01a837928838a398f31319af078817294e
