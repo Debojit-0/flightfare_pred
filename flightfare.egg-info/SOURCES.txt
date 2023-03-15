@@ -1,4 +1,3 @@
-README.md
 setup.py
 flightfare.egg-info/PKG-INFO
 flightfare.egg-info/SOURCES.txt

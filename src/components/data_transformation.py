@@ -19,27 +19,25 @@ class DataTransformationConfig:
     preprocessor_obj_file_path=os.path.join('artifacts',"proprocessor.pkl")
 
 class DataTransformation:
+
+
     def __init__(self):
         self.data_transformation_config=DataTransformationConfig()
 
-def get_data_transformer_object(self):
-        '''
-        This function is responsible for data trnasformation
-        
-        '''
+    def clean_data(df):
         try:
-            df1 =pd.read_csv("artifacts/train.csv")
-            df2 =pd.read_csv("artifacts/test.csv")
-            df1['Journey_day']=pd.to_datetime(df1['Date_of_Journey'],format="%d/%m/%Y").dt.day
-            df1['Journey_month']=pd.to_datetime(df1['Date_of_Journey'],format="%d/%m/%Y").dt.month
-            df1['Journey_year']=pd.to_datetime(df1['Date_of_Journey'],format="%d/%m/%Y").dt.year
-            df1= df.drop(['Date_of_Journey'], axis=1)
-            df1['hours']=pd.to_datetime(df1['Dep_Time']).dt.hour
-            df1['minutes']=pd.to_datetime(df1['Dep_Time']).dt.minute
-            df1.drop(["Dep_Time"], axis = 1, inplace = True)
-            df1["Arrival_hour"] = pd.to_datetime(df1.Arrival_Time).dt.hour
-            df1["Arrival_min"] = pd.to_datetime(df1.Arrival_Time).dt.minute
-            duration = list(df1["Duration"])
+            df =pd.read_csv("artifacts/data.csv")
+            
+            df['Journey_day']=pd.to_datetime(df['Date_of_Journey'],format="%d/%m/%Y").dt.day
+            df['Journey_month']=pd.to_datetime(df['Date_of_Journey'],format="%d/%m/%Y").dt.month
+            df['Journey_year']=pd.to_datetime(df['Date_of_Journey'],format="%d/%m/%Y").dt.year
+            df= df.drop(['Date_of_Journey'], axis=1)
+            df['hours']=pd.to_datetime(df['Dep_Time']).dt.hour
+            df['minutes']=pd.to_datetime(df['Dep_Time']).dt.minute
+            df.drop(["Dep_Time"], axis = 1, inplace = True)
+            df["Arrival_hour"] = pd.to_datetime(df.Arrival_Time).dt.hour
+            df["Arrival_min"] = pd.to_datetime(df.Arrival_Time).dt.minute
+            duration = list(df["Duration"])
 
             for i in range(len(duration)):
                 
@@ -50,56 +48,23 @@ def get_data_transformer_object(self):
                         duration[i] = duration[i].strip() + " 0m"   # Adds 0 minute
                     else:
                         
-                        duration[i] = "0h " + duration[i]           # Adds 0 hour
-
-            duration_hours = []
-            duration_mins = []
-            for i in range(len(duration)):
-                
-                duration_hours.append(int(duration[i].split(sep = "h")[0]))    # Extract hours from duration
-                duration_mins.append(int(duration[i].split(sep = "m")[0].split()[-1]))   # Extracts only minutes from duration
-            df1["duration-mins"]= duration_mins
-            df1["duration-hours"]= duration_hours
-            df1 = df1.drop(["Duration"],axis=1)
-            df1 = df1.drop(["Arrival_Time"],axis=1)
-
-
-
-            df2['Journey_day']=pd.to_datetime(df2['Date_of_Journey'],format="%d/%m/%Y").dt.day
-            df2['Journey_month']=pd.to_datetime(df2['Date_of_Journey'],format="%d/%m/%Y").dt.month
-            df2['Journey_year']=pd.to_datetime(df2['Date_of_Journey'],format="%d/%m/%Y").dt.year
-            df2= df2.drop(['Date_of_Journey'], axis=1)
-            df2['hours']=pd.to_datetime(df2['Dep_Time']).dt.hour
-            df2['minutes']=pd.to_datetime(df2['Dep_Time']).dt.minute
-            df2.drop(["Dep_Time"], axis = 1, inplace = True)
-            df2["Arrival_hour"] = pd.to_datetime(df2.Arrival_Time).dt.hour
-            df2["Arrival_min"] = pd.to_datetime(df2.Arrival_Time).dt.minute
-            duration = list(df2["Duration"])
-
-            for i in range(len(duration)):
-                
-                if len(duration[i].split()) != 2:
-                      # Check if duration contains only hour or mins
-                    if "h" in duration[i]:
-                    
-                        duration[i] = duration[i].strip() + " 0m"   # Adds 0 minute
-                    else:
+                        duration[i] = "0h " + duration[i]  
                         
-                        duration[i] = "0h " + duration[i]           # Adds 0 hour
-
             duration_hours = []
             duration_mins = []
             for i in range(len(duration)):
-                
                 duration_hours.append(int(duration[i].split(sep = "h")[0]))    # Extract hours from duration
                 duration_mins.append(int(duration[i].split(sep = "m")[0].split()[-1]))   # Extracts only minutes from duration
-            df2["duration-mins"]= duration_mins
-            df2["duration-hours"]= duration_hours
-            df2 = df2.drop(["Duration"],axis=1)
-            df2 = df2.drop(["Arrival_Time"],axis=1)
+                df["duration-mins"]= duration_mins
+                df["duration-hours"]= duration_hours
+                df = df.drop(["Duration"],axis=1)
+                df = df.drop(["Arrival_Time"],axis=1)   
             
-            
-           
+            return df # Adds 0 hour
+
+    def get_data_transformation(self):
+
+        try:
             numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration-mins","duration-hours"]
             categorical_columns = [
                 "Airline",
@@ -141,64 +106,64 @@ def get_data_transformer_object(self):
             )
 
             logging.info("Train test split initiated")
-        
-
             return preprocessor
         
         except Exception as e:
-            raise CustomException(e,sys)
-def inititate_data_transformation(self,train_path,test_path):
-    try:
-        train_df=pd.read_csv(train_path)
-        test_df=pd.resd_csv(test_path)
+            raise CustomException(e,sys) 
+       
+    def inititate_data_transformation(self,raw_data_path):
+        try:
 
-        logging.info("Read train and test data completed")
+            df1=pd.read_csv(raw_data_path)
+            cleaned_data=self.clean_data(df1)
+            train_set,test_set=train_test_split(cleaned_data,test_size=0.2,random_state=42)
+            #train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
+            #test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
-        logging.info("Obtaining preprocessing object")
 
-        preprocessing_obj=self.get_data_transformer_object()
 
-        target_column_name ="Price"
-        numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration-mins","duration-hours"]
-        input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
-        target_feature_train_df=train_df[target_column_name]
+            #test_df=pd.resd_csv(test_path)
 
-        input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
-        target_feature_test_df=test_df[target_column_name]
+            logging.info("Read the raw data")
 
-        logging.info(
+            logging.info("Obtaining preprocessing object")
+
+            preprocessing_obj=self.get_data_transformer_object()
+            target_column_name ="Price"
+            numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration-mins","duration-hours"]
+            input_feature_train_df=train_set.drop(columns=[target_column_name],axis=1)
+            target_feature_train_df=train_set[target_column_name]
+            input_feature_test_df=test_set.drop(columns=[target_column_name],axis=1)
+            target_feature_test_df=test_set[target_column_name]
+
+            logging.info(
                 f"Applying preprocessing object on training dataframe and testing dataframe."
             )
-        input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
-        input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
+            input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
-        logging.info(f"Saved preprocessing object.")
+            logging.info(f"Saved preprocessing object.")
 
-        train_arr = np.c_[
+            train_arr = np.c_[
                 input_feature_train_arr, np.array(target_feature_train_df)
             ]
-        test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
 
-
-
-
-
-        save_object(
+            save_object(
 
             file_path=self.data_transformation_config.preprocessor_obj_file_path,
             obj=preprocessing_obj
         )
 
-        return (
-
-            train_arr,
-            test_arr,
-            self.data_transformation_config.preprocessor_obj_file_path
+            return (
+                train_arr,test_arr,
+                self.data_transformation_config.preprocessor_obj_file_path,
+            
         )
 
-    except Exception as e:
-        raise CustomException(e,sys)
+        except Exception as e:
+            raise CustomException(e,sys)
 
 
 
