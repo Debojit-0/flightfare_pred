@@ -1,1 +1,11 @@
 pymongo
+pandas
+numpy
+seaborn
+matplotlib
+scikit-learn
+catboost
+xgboost
+openpyxl
+dill
+-e .

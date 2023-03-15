@@ -1,25 +1,13 @@
-import pymongo
+import pandas as pd
+from src.exception import CustomException
 
-# Provide the mongodb localhost url to connect python to mongodb.
-client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
+import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline
 
-# Database Name
-dataBase = client["neurolabDB"]
+df=pd.read_excel("/config/workspace/notebook/data/Data_Train.xlsx")
+df1=df.copy()
+print(df1)
 
-# Collection  Name
-collection = dataBase['Products']
-
-# Sample data
-d = {'companyName': 'iNeuron',
-     'product': 'Affordable AI',
-     'courseOffered': 'Machine Learning with Deployment'}
-
-# Insert above records in the collection
-rec = collection.insert_one(d)
-
-# Lets Verify all the record at once present in the record with all the fields
-all_record = collection.find()
-
-# Printing all records present in the collection
-for idx, record in enumerate(all_record):
-     print(f"{idx}: {record}")
+df1['Journey_day']=pd.to_datetime(df1['Date_of_Journey'],format="%d/%m/%Y").dt.day
+print(df1)
