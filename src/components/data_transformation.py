@@ -13,6 +13,7 @@ from src.logger import logging
 import os
 from src.utils import save_object
 from sklearn.model_selection import train_test_split
+#from src.components.data_ingestion import DataIngestion
 
 @dataclass
 class DataTransformationConfig:
@@ -24,9 +25,9 @@ class DataTransformation:
     def __init__(self):
         self.data_transformation_config=DataTransformationConfig()
 
-    def clean_data(df):
+    def clean_data(self,df):
         try:
-            df =pd.read_csv("artifacts/data.csv")
+            #df =pd.read_csv("artifacts/data.csv")
             
             df['Journey_day']=pd.to_datetime(df['Date_of_Journey'],format="%d/%m/%Y").dt.day
             df['Journey_month']=pd.to_datetime(df['Date_of_Journey'],format="%d/%m/%Y").dt.month
@@ -57,10 +58,13 @@ class DataTransformation:
                 duration_mins.append(int(duration[i].split(sep = "m")[0].split()[-1]))   # Extracts only minutes from duration
                 df["duration-mins"]= duration_mins
                 df["duration-hours"]= duration_hours
-                df = df.drop(["Duration"],axis=1)
-                df = df.drop(["Arrival_Time"],axis=1)   
+                #df = df.drop(["Duration"],axis=1)
+                #df = df.drop(["Arrival_Time"],axis=1)   
             
             return df # Adds 0 hour
+        except Exception as e:
+            raise CustomException(e,sys) 
+       
 
     def get_data_transformation(self):
 
@@ -154,13 +158,13 @@ class DataTransformation:
 
             file_path=self.data_transformation_config.preprocessor_obj_file_path,
             obj=preprocessing_obj
-        )
+            )
 
             return (
                 train_arr,test_arr,
                 self.data_transformation_config.preprocessor_obj_file_path,
             
-        )
+            )
 
         except Exception as e:
             raise CustomException(e,sys)

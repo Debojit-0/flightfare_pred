@@ -56,7 +56,7 @@ if __name__=="__main__":
     raw_data_imgestion=obj.initiate_data_ingestion()
 
     obj2=DataTransformation()
-    raw_arr=obj2.inititate_data_transformation(raw_data_path)
+    raw_arr=obj2.inititate_data_transformation(raw_data_imgestion)
 
 
 
