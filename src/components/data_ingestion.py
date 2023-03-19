@@ -6,7 +6,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
-from src.components.data_transformation import DataTransformationConfig
+#from src.components.data_transformation import DataTransformationConfig
+from src.components.data_cleaning import DataCleaning
 
 @dataclass
 class DataIngestionConfig:
@@ -29,12 +30,12 @@ class DataIngestion:
 
             df.to_csv(self.ingestion_config.raw_data_path,index=False,header=True)
 
-            #logging.info("Train test split initiated")
-            #train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
+            logging.info("Train test split initiated")
+            train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
 
-            #train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
+            train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
 
-            #test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
+            test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
         
            
@@ -42,8 +43,8 @@ class DataIngestion:
             logging.info("Inmgestion of the data iss completed")
 
             return self.ingestion_config.raw_data_path
-            #return self.ingestion_config.train_data_path
-            #return self.ingestion_config.test_data_path
+            return self.ingestion_config.train_data_path
+            return self.ingestion_config.test_data_path
 
 
             
@@ -55,8 +56,8 @@ if __name__=="__main__":
     obj=DataIngestion()
     raw_data_imgestion=obj.initiate_data_ingestion()
 
-    obj2=DataTransformation()
-    raw_arr=obj2.inititate_data_transformation(raw_data_imgestion)
+    obj2=DataCleaning()
+    raw_arr=obj2.initiate_data_cleaning()
 
 
 

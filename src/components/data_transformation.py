@@ -115,10 +115,10 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e,sys) 
        
-    def inititate_data_transformation(self,raw_data_path):
+    def inititate_data_transformation(self):
         try:
 
-            df1=pd.read_csv(raw_data_path)
+            df1=pd.read_csv("artifacts/data.csv")
             cleaned_data=self.clean_data(df1)
             train_set,test_set=train_test_split(cleaned_data,test_size=0.2,random_state=42)
             #train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
