@@ -59,6 +59,8 @@ if __name__=="__main__":
     obj2=DataCleaning()
     raw_arr=obj2.initiate_data_cleaning()
 
+    obj3=DataTransformation()
+    raw_transformation=obj3.inititate_data_transformation()
 
 
 
