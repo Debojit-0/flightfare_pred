@@ -8,4 +8,5 @@ catboost
 xgboost
 openpyxl
 dill
+Flask
 -e .
