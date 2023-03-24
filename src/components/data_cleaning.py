@@ -42,6 +42,7 @@ class DataCleaning:
             df1.drop(["Dep_Time"], axis = 1, inplace = True)
             df1["Arrival_hour"] = pd.to_datetime(df1.Arrival_Time).dt.hour
             df1["Arrival_min"] = pd.to_datetime(df1.Arrival_Time).dt.minute
+            df1 = df1.drop(["Additional_Info"],axis=1)
             duration = list(df1["Duration"])
 
             for i in range(len(duration)):
@@ -60,8 +61,8 @@ class DataCleaning:
             for i in range(len(duration)):
                 duration_hours.append(int(duration[i].split(sep = "h")[0]))    # Extract hours from duration
                 duration_mins.append(int(duration[i].split(sep = "m")[0].split()[-1]))   # Extracts only minutes from duration
-            df1["duration-mins"]= duration_mins
-            df1["duration-hours"]= duration_hours
+            df1["duration_mins"]= duration_mins
+            df1["duration_hours"]= duration_hours
             df1 = df1.drop(["Duration"],axis=1)
             df1 = df1.drop(["Arrival_Time"],axis=1) 
             df1 = df1.drop(["Route"],axis=1)
@@ -77,6 +78,7 @@ class DataCleaning:
             df2.drop(["Dep_Time"], axis = 1, inplace = True)
             df2["Arrival_hour"] = pd.to_datetime(df2.Arrival_Time).dt.hour
             df2["Arrival_min"] = pd.to_datetime(df2.Arrival_Time).dt.minute
+            df2 = df2.drop(["Additional_Info"],axis=1)
             logging.info('processingthe test dataset as dataframe')
             duration = list(df2["Duration"])
 
@@ -98,8 +100,8 @@ class DataCleaning:
                 #logging.info('entered the loop')
                 duration_hours.append(int(duration[i].split(sep = "h")[0]))    # Extract hours from duration
                 duration_mins.append(int(duration[i].split(sep = "m")[0].split()[-1]))   # Extracts only minutes from duration
-            df2["duration-mins"]= duration_mins
-            df2["duration-hours"]= duration_hours
+            df2["duration_mins"]= duration_mins
+            df2["duration_hours"]= duration_hours
             df2 = df2.drop(["Duration"],axis=1)
             df2 = df2.drop(["Arrival_Time"],axis=1)
             df2 = df2.drop(["Route"],axis=1)

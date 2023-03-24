@@ -11,6 +11,8 @@ src/utils.py
 src/components/__init__.py
 src/components/data_cleaning.py
 src/components/data_ingestion.py
-src/components/data_ingestion_1.py
 src/components/data_transformation.py
 src/components/model_trainer.py
+src/pipelines/__init__.py
+src/pipelines/predict_pipeline.py
+src/pipelines/train_pipeline.py

@@ -29,12 +29,12 @@ class DataTransformation:
     def get_data_transformation(self):
 
         try:
-            numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration-mins","duration-hours"]
+            numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration_mins","duration_hours","Total_Stops"]
             categorical_columns = [
                 "Airline",
                 "Source",
                 "Destination",
-                "Total_Stops",
+                
             
             ]
 
@@ -90,7 +90,7 @@ class DataTransformation:
 
             preprocessing_obj=self.get_data_transformation()
             target_column_name ="Price"
-            numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration-mins","duration-hours"]
+            numerical_columns = ["Journey_day", "Journey_month","Journey_year","hours","minutes","Arrival_hour","Arrival_min","duration_mins","duration_hours","Total_Stops"]
             input_feature_train_df= train_df.drop(columns=[target_column_name],axis=1)
             target_feature_train_df= train_df[target_column_name]
             input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)

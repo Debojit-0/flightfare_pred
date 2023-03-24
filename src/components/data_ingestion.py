@@ -9,6 +9,7 @@ from src.components.data_transformation import DataTransformation
 #from src.components.data_transformation import DataTransformationConfig
 from src.components.data_cleaning import DataCleaning
 from src.components.model_trainer import  ModelTrainer
+#from src.pipelines.predict_pipeline import PredictPipeline
 
 @dataclass
 class DataIngestionConfig:
@@ -66,6 +67,8 @@ if __name__=="__main__":
    
     obj4=ModelTrainer()
     print(obj4.initiate_model_trainer(train_arr,test_arr))
+
+
 
 
 

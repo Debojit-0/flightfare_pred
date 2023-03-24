@@ -22,12 +22,18 @@ def predict_datapoint():
     else:
         data=CustomData(
             Airline=request.form.get('Airline'),
-            Dep_Time=request.form.get('Dep_Time'),
-            Arrival_Time=request.form.get('Arrival_Time'),
             Source=request.form.get('Source'),
             Destination=request.form.get('Destination'),
-            Total_Stops=float(request.form.get('Total_Stops')),
-            #writing_score=float(request.form.get('reading_score'))
+            Total_Stops=request.form.get('Total_Stops'),
+            Journey_day=request.form.get('Journey_day'),
+            Journey_month=request.form.get('Journey_month'),
+            Journey_year=request.form.get('Journey_year'),
+            hours=request.form.get('hours'),
+            minutes=request.form.get('minutes'),
+            Arrival_hour=request.form.get(' Arrival_hour'),
+            Arrival_min=request.form.get(' Arrival_min'),
+            duration_hours=request.form.get('duration_hours'),
+            duration_mins=request.form.get('duration_mins'),
 
         )
         pred_df=data.get_data_as_data_frame()
@@ -39,5 +45,6 @@ def predict_datapoint():
     
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0",debug=True,port=8080) 
+    app.run(host="0.0.0.0",port=8080,debug=True)        
     
+
