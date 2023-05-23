@@ -4,6 +4,7 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from src.pipelines.predict_pipeline import CustomData,PredictPipeline
+#from src.logger import logging
 
 application=Flask(__name__)
 
@@ -45,6 +46,6 @@ def predict_datapoint():
     
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0",port=8080,debug=True)        
+    app.run(debug=True)        
     
 
