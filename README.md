@@ -18,3 +18,9 @@ Deployed with Azure
                 
 Best algorithm found was xgboost regressor
 
+<img width="617" alt="flight fare 1 " src="https://github.com/Debojit-0/flightfare_pred/assets/77208481/8b753990-d214-41da-a6fd-635ed50900c9">
+
+
+<img width="616" alt="flight fare 2" src="https://github.com/Debojit-0/flightfare_pred/assets/77208481/b6b24064-e4ca-494f-9920-da23527e8617">
+
+
